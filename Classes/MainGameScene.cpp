@@ -31,6 +31,7 @@ bool MainGameScene::init(){
     {
         return false;
     }
+    std::vector<tapClass*> tapArray;
     Size visibleSize = Director::getInstance()->getVisibleSize();
     /**タッチ処理*/
     auto listener = EventListenerTouchOneByOne::create();
