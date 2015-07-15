@@ -24,16 +24,21 @@ bool tapClass::init(const char *img){
 }
 
 void tapClass::Collision(Sprite* player){
-    if(state == true){
+    //if(state == true){
         Rect rec1 = this->getBoundingBox();
         Rect rec2 = player->getBoundingBox();
         if(rec1.intersectsRect(rec2)){
             //return true;
             this->removeFromParent();
+            //log("aaa");
             state = false;
         }
-    }
+    //}
         
     //return false;
+}
+
+bool tapClass::getState(){
+    return state;
 }
 

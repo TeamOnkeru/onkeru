@@ -29,6 +29,7 @@ private:
     cocos2d::Sprite* player;
     tapClass* stoneTest;
     void update(float delta);
+    std::vector<tapClass*> stoneArray;
     //bool SpriteCollision(cocos2d::Sprite* col1,cocos2d::Sprite* col2);
    // void update(float delta);
 };

@@ -31,30 +31,40 @@ bool MainGameScene::init(){
     {
         return false;
     }
-    std::vector<tapClass*> tapArray;
+    //std::vector<tapClass*> stoneArray;
     Size visibleSize = Director::getInstance()->getVisibleSize();
     /**タッチ処理*/
     auto listener = EventListenerTouchOneByOne::create();
     listener->setSwallowTouches(true);
     listener->onTouchBegan = CC_CALLBACK_2(MainGameScene::onTouchBegan,this);
     
+    //"onkeru/player_mock.png"
     player = Sprite::create("onkeru/player_mock.png");
     player->setScale(0.5);
     player->setPosition(visibleSize.width/2,visibleSize.height/2);
     Vec2 origin = Director::getInstance()->getVisibleOrigin();
     
     //背景
+    //"talkChara/classroom.png"
     auto backStage = Sprite::create("talkChara/classroom.png");
     backStage->setPosition(backStage->getContentSize().width/2,backStage->getContentSize().height/2);
     //Sprite* spriteO = Sprite::create("talkChara/classroom.png");
     
     //石のテスト
-    stoneTest = tapClass::create("onkeru/blue.png");
-    stoneTest->setPosition(300,100);
-    stoneTest->setScale(0.5);
+    //"onkeru/blue.png"
+    for(int i=0; i< 10; i++){
+        stoneTest = tapClass::create("onkeru/blue.png");
+        stoneTest->setPosition((rand()%400+100),(rand()%400+100));
+        stoneTest->setScale(0.5);
+        stoneArray.push_back(stoneTest);
+    }
     
     this->addChild(backStage);
-    this->addChild(stoneTest);
+    for(int i=0; i<10; i++){
+        this->addChild(stoneArray[i]);
+    }
+    //this->addChild(stoneTest);
+    
     this->addChild(player);
     
     //Updateを使用する
@@ -74,7 +84,14 @@ bool MainGameScene::onTouchBegan(Touch *touch, Event *event){
 }
 
 void MainGameScene::update(float delta){
-    stoneTest->Collision(player);
+    for(int i=0; i< stoneArray.size(); i++){
+        stoneArray[i]->Collision(player);
+        if(stoneArray[i]->getState() == false){
+        	stoneArray.erase(stoneArray.begin() + i);
+        	//log("aaaa");
+        }
+        //stoneTest->Collision(player);
+    }
     /*
     if(stoneTest->Collision(player) == true){
         this->removeChild(stoneTest);

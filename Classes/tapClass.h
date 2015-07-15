@@ -16,6 +16,7 @@ public:
     static tapClass* create(const char *img);
     virtual bool init(const char *img);
     void Collision(Sprite* player);
+    bool getState();
 private:
     bool state;
     //void update(float delta);
