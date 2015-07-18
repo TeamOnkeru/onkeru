@@ -8,14 +8,14 @@
 
 #include "PlayerData.h"
 
-PlayerData* PlayerData::mPlayerData = NULL;
+PlayerData* PlayerData::mPlayerData = nullptr;
 
 PlayerData::PlayerData(){
     getStoneCount =0;
 }
 
 PlayerData* PlayerData::sharePlayerData(){
-    if(mPlayerData == NULL){
+    if(mPlayerData == nullptr){
         mPlayerData = new PlayerData();
     }
     return mPlayerData;
