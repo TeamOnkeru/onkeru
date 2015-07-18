@@ -2,7 +2,7 @@
 //  MainGameScene.h
 //  testCocos
 //
-//  Created by 大久保友博 on 2015/07/10.
+//  Created by OkuboTomoihiro on 2015/07/10.
 //
 //
 
@@ -10,6 +10,7 @@
 #define __testCocos__MainGameScene__
 
 #include "cocos2d.h"
+//#include "ui/CocosGUI.h"
 #include "tapClass.h"
 
 class MainGameScene : public cocos2d::Layer
@@ -29,6 +30,14 @@ private:
     cocos2d::Sprite* player;
     tapClass* stoneTest;
     void update(float delta);
+    void setDownMenu();
+    /*ボタンの処理*/
+    void homeButtonAction(Ref *pSender);
+    void powerStoneButtonAction(Ref *pSender);
+    void storyButtonAction(Ref *pSender);
+    void collectionButtonAction(Ref *pSender);
+    void posterButtonAction(Ref *pSender);
+    /*落ちている石の配列*/
     std::vector<tapClass*> stoneArray;
     //bool SpriteCollision(cocos2d::Sprite* col1,cocos2d::Sprite* col2);
    // void update(float delta);
