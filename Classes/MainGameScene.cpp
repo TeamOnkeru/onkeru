@@ -56,14 +56,14 @@ bool MainGameScene::init(){
     //石のテスト
     //"onkeru/blue.png"
     for(int i=0; i< 10; i++){
-        stoneTest = tapClass::create("onkeru/blue.png");
-        stoneTest->setPosition((rand()%400+100),(rand()%400+100));
+        auto stoneTest = tapClass::create("onkeru/blue.png");
+        stoneTest->setPosition((rand()%500+100),(rand()%500+100));
         stoneTest->setScale(0.5);
         stoneArray.push_back(stoneTest);
     }
     
     this->addChild(backStage);
-    for(int i=0; i<10; i++){
+    for(int i=0; i<stoneArray.size(); i++){
         this->addChild(stoneArray[i]);
     }
     //this->addChild(stoneTest);
@@ -72,12 +72,14 @@ bool MainGameScene::init(){
     
     //Updateを使用する
     this->scheduleUpdate();
+    this->schedule(schedule_selector(MainGameScene::addStone),5.0f);
     this->setDownMenu();
     auto dip = Director::getInstance()->getEventDispatcher();
     dip->addEventListenerWithSceneGraphPriority(listener, this);
     return true;
 }
 
+/**画面がタップされたときの処理*/
 bool MainGameScene::onTouchBegan(Touch *touch, Event *event){
     Vec2 getPoint = touch->getLocation();
     log("%f",getPoint.y);
@@ -85,20 +87,24 @@ bool MainGameScene::onTouchBegan(Touch *touch, Event *event){
     player->runAction(playerAction);
     return true;
 }
-
+/**常時呼び出される*/
 void MainGameScene::update(float delta){
     for(int i=0; i< stoneArray.size(); i++){
         stoneArray[i]->Collision(player);
         if(stoneArray[i]->getState() == false){
         	stoneArray.erase(stoneArray.begin() + i);
-        	//log("aaaa");
+            PlayerData::sharePlayerData()->getStoneCount++;
         }
-        //stoneTest->Collision(player);
     }
-    /*
-    if(stoneTest->Collision(player) == true){
-        this->removeChild(stoneTest);
-    }*/
+    log("stone:%d",PlayerData::sharePlayerData()->getStoneCount);
+}
+/**石を追加する*/
+void MainGameScene::addStone(float delta){
+    auto stoneTest = tapClass::create("onkeru/blue.png");
+    stoneTest->setPosition((rand()%500+100),(rand()%500+100));
+    stoneTest->setScale(0.5);
+    stoneArray.push_back(stoneTest);
+    this->addChild(stoneArray.at(stoneArray.size()-1));
 }
 
 /**下のメニューの作成*/
@@ -147,6 +153,7 @@ void MainGameScene::homeButtonAction(Ref *pSender){
 }
 void MainGameScene::powerStoneButtonAction(Ref *pSender){
     log("PowerStone");
+    Director::getInstance()->replaceScene(TransitionFade::create(1.0f,PowerStoneScene::createScene()));
 }
 void MainGameScene::storyButtonAction(Ref *pSender){
     log("storyButton");

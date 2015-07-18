@@ -12,6 +12,8 @@
 #include "cocos2d.h"
 //#include "ui/CocosGUI.h"
 #include "tapClass.h"
+#include "PlayerData.h"
+#include "PowerStoneScene.h"
 
 class MainGameScene : public cocos2d::Layer
 {
@@ -28,7 +30,6 @@ public:
 private:
     bool onTouchBegan(cocos2d::Touch *touch, cocos2d::Event *event);
     cocos2d::Sprite* player;
-    tapClass* stoneTest;
     void update(float delta);
     void setDownMenu();
     /*ボタンの処理*/
@@ -39,6 +40,7 @@ private:
     void posterButtonAction(Ref *pSender);
     /*落ちている石の配列*/
     std::vector<tapClass*> stoneArray;
+    void addStone(float delta);
     //bool SpriteCollision(cocos2d::Sprite* col1,cocos2d::Sprite* col2);
    // void update(float delta);
 };

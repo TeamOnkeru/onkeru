@@ -1,6 +1,7 @@
 #include "AppDelegate.h"
 #include "talkScene.h"
 #include "MainGameScene.h"
+#include "PowerStoneScene.h"
 
 USING_NS_CC;
 
