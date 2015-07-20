@@ -10,6 +10,7 @@
 #define __testCocos__powerStoneScene__
 #include "cocos2d.h"
 #include "PlayerData.h"
+#include "DownMenu.h"
 
 class PowerStoneScene : public cocos2d::Layer
 {

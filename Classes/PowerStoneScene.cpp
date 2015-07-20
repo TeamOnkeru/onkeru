@@ -35,14 +35,15 @@ bool PowerStoneScene::init(){
     Vec2 origin = Director::getInstance()->getVisibleOrigin();
     
     //表示する文字列
-    //std::string getStone = PlayerData::sharePlayerData()->getStoneCount;
-    auto drawLabel = Label::createWithSystemFont("aaa","fonts/NotoSansCJKjp-Regular.otf",30);
+    auto drawLabel = Label::createWithSystemFont("","fonts/NotoSansCJKjp-Regular.otf",30);
     drawLabel->setColor(Color3B(255,255,255));
     drawLabel->setString(StringUtils::toString(PlayerData::sharePlayerData()->getStoneCount).c_str());
-    //drawLabel->setAnchorPoint(Vec2(0,1));   //座標軸を左上にする
     drawLabel->setPosition(visibleSize.width/2,visibleSize.height/2);
-    //drawLabel->setWidth(600);
+    
+    //下のメニュー
+    auto downMenuBar = DownMenu::create();
     this->addChild(drawLabel);
+    this->addChild(downMenuBar->getDownMenu());
     
     return true;
 }
