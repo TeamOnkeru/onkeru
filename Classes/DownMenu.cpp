@@ -10,12 +10,6 @@
 USING_NS_CC;
 
 bool DownMenu::init(){
-    /*
-    if ( !Layer::init() )
-    {
-        return false;
-    }
-     */
     setDownMenu();
     
     return true;

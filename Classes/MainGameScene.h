@@ -15,6 +15,7 @@
 #include "PlayerData.h"
 #include "PowerStoneScene.h"
 #include "DownMenu.h"
+#include "time.h"
 
 class MainGameScene : public cocos2d::Layer
 {
@@ -30,12 +31,13 @@ public:
     CREATE_FUNC(MainGameScene);
 private:
     bool onTouchBegan(cocos2d::Touch *touch, cocos2d::Event *event);
-    cocos2d::Sprite* player;
-    void update(float delta);
-    
-    /*落ちている石の配列*/
-    std::vector<tapClass*> stoneArray;
-    void addStone(float delta);
+    cocos2d::Sprite* player;    //プレイヤーのスプライト
+    void update(float delta);   //update関数
+    std::vector<tapClass*> stoneArray;  //落ちている石の配列
+    void addStone(/*float delta*/);     //石を追加する関数
+    void timeInit();  //save時間の初期化
+    void stoneTimeManage(int elapsedTime);  //時間による石の管理
+    const int MAX_STONE =15;    //ステージ上に表示される石の最大数
     
 };
 

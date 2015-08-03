@@ -13,6 +13,7 @@
 #include "PowerStoneScene.h"
 #include "MainGameScene.h"
 
+/**下メニュークラス*/
 class DownMenu:public cocos2d::Node
 {
 public:

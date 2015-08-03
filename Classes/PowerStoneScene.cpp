@@ -34,14 +34,23 @@ bool PowerStoneScene::init(){
     Size visibleSize = Director::getInstance()->getVisibleSize();
     Vec2 origin = Director::getInstance()->getVisibleOrigin();
     
+    //背景
+    auto backStage = Sprite::create("onkeru/divination.png");
+    backStage->setPosition(backStage->getContentSize().width/2,backStage->getContentSize().height/2);
+    
     //表示する文字列
     auto drawLabel = Label::createWithSystemFont("","fonts/NotoSansCJKjp-Regular.otf",30);
     drawLabel->setColor(Color3B(255,255,255));
-    drawLabel->setString(StringUtils::toString(PlayerData::sharePlayerData()->getStoneCount).c_str());
-    drawLabel->setPosition(visibleSize.width/2,visibleSize.height/2);
+    std::string drawStoneLabel("パワーストーン:");
+    drawStoneLabel.append(StringUtils::toString(PlayerData::sharePlayerData()->getStoneCount).c_str());
+    drawStoneLabel.append("個");
+    
+    drawLabel->setString(drawStoneLabel);
+    drawLabel->setPosition(visibleSize.width/2,visibleSize.height/2-visibleSize.height/5);
     
     //下のメニュー
     auto downMenuBar = DownMenu::create();
+    this->addChild(backStage);
     this->addChild(drawLabel);
     this->addChild(downMenuBar->getDownMenu());
     
