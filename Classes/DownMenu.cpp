@@ -70,8 +70,10 @@ void DownMenu::powerStoneButtonAction(Ref *pSender){
 }
 void DownMenu::storyButtonAction(Ref *pSender){
     log("storyButton");
+    Director::getInstance()->replaceScene(TransitionFade::create(1.0f,StoryScene::createScene()));
 }
 void DownMenu::collectionButtonAction(Ref *pSender){
+    Director::getInstance()->replaceScene(TransitionFade::create(1.0f,CollectionScene::createScene()));
     log("collectionButton");
 }
 void DownMenu::posterButtonAction(Ref *pSender){

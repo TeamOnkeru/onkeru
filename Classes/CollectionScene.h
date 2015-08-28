@@ -1,18 +1,19 @@
 //
-//  powerStoneScene.h
+//  CollectionScene.h
 //  testCocos
 //
-//  Created by OkuboTomohiro on 2015/07/18.
+//  Created by 大久保友博 on 2015/08/24.
 //
 //
 
-#ifndef __testCocos__powerStoneScene__
-#define __testCocos__powerStoneScene__
+#ifndef __testCocos__CollectionScene__
+#define __testCocos__CollectionScene__
+
 #include "cocos2d.h"
 #include "PlayerData.h"
 #include "DownMenu.h"
 
-class PowerStoneScene : public cocos2d::Layer
+class CollectionScene : public cocos2d::Layer
 {
     
 public:
@@ -21,12 +22,11 @@ public:
     
     // Here's a difference. Method 'init' in cocos2d-x returns bool, instead of returning 'id' in cocos2d-iphone
     virtual bool init();
-    void changeButtonAction(Ref *pSender);
+    
     // a selector callback
-    CREATE_FUNC(PowerStoneScene);
+    CREATE_FUNC(CollectionScene);
 private:
-    cocos2d::UserDefault* userDefault;   //セーブの変数
     
 };
 
-#endif /* defined(__testCocos__powerStoneScene__) */
+#endif /* defined(__testCocos__CollectionScene__) */

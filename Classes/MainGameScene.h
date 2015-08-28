@@ -10,12 +10,12 @@
 #define __testCocos__MainGameScene__
 
 #include "cocos2d.h"
-//#include "ui/CocosGUI.h"
 #include "tapClass.h"
 #include "PlayerData.h"
 #include "PowerStoneScene.h"
 #include "DownMenu.h"
 #include "time.h"
+#include <string>
 
 class MainGameScene : public cocos2d::Layer
 {
@@ -38,7 +38,7 @@ private:
     void timeInit();  //save時間の初期化
     void stoneTimeManage(int elapsedTime);  //時間による石の管理
     const int MAX_STONE =15;    //ステージ上に表示される石の最大数
-    
+    cocos2d::UserDefault* userDefault;   //セーブの変数
 };
 
 

@@ -10,6 +10,9 @@
 #define __testCocos__talkScene__
 
 #include "cocos2d.h"
+#include "PlayerData.h"
+#include "MainGameScene.h"
+#include <string>
 
 class talkScene : public cocos2d::Layer{
 private:

@@ -36,18 +36,42 @@ bool MainGameScene::init(){
     listener->setSwallowTouches(true);
     listener->onTouchBegan = CC_CALLBACK_2(MainGameScene::onTouchBegan,this);
     
+    /**ロード部*/
+    userDefault = UserDefault::getInstance();
+    auto dataSaveTime = userDefault->getIntegerForKey("saveTime",-1);
+    
+    //userDefault->setStringForKey("playerChara","onkeru/player_normal.png");
+    
+    if(dataSaveTime == -1){
+        /*開始時間時間の取得*/
+        timeInit();
+    }/*
+    else{
+        PlayerData::sharePlayerData()->loadSetSaveTime(dataSaveTime);
+        PlayerData::sharePlayerData()->getStoneCount = userDefault->getIntegerForKey("getStoneCount",0);
+        PlayerData::sharePlayerData()->downStoneCount = userDefault->getIntegerForKey("downStoneCount",0);
+        PlayerData::sharePlayerData()->playerChara = userDefault->getStringForKey("playerChara","onkeru/player_normal.png");
+        PlayerData::sharePlayerData()->getOnkeru1 = userDefault->getBoolForKey("onkeru1",false);
+        PlayerData::sharePlayerData()->getOnkeru2 = userDefault->getBoolForKey("onkeru2",false);
+        PlayerData::sharePlayerData()->getOnkeru3 = userDefault->getBoolForKey("onkeru3",false);
+        PlayerData::sharePlayerData()->getOnkeru4 = userDefault->getBoolForKey("onkeru4",false);
+        PlayerData::sharePlayerData()->getOnkeru5 = userDefault->getBoolForKey("onkeru5",false);
+    }*/
+    
+    /*初期の石を配置*/
     for (int i =0; i<PlayerData::sharePlayerData()->downStoneCount; i++) {
         addStone();
     }
-    /*開始時間時間の取得*/
-    timeInit();
     
     
     
     //"onkeru/player_mock.png"
-    player = Sprite::create("onkeru/player_normal.png");
+    player = Sprite::create(PlayerData::sharePlayerData()->playerChara);
     player->setScale(0.8);
     player->setPosition(visibleSize.width/2,visibleSize.height/2);
+    
+    
+    
     Vec2 origin = Director::getInstance()->getVisibleOrigin();
     
     //背景
@@ -56,10 +80,7 @@ bool MainGameScene::init(){
     //downMunu
     auto downMenuBar = DownMenu::create();
     
-    
     //Sprite* spriteO = Sprite::create("talkChara/classroom.png");
-    
-    
     
     this->addChild(backStage);
     
@@ -97,9 +118,9 @@ bool MainGameScene::onTouchBegan(Touch *touch, Event *event){
     player->runAction(playerAction);
     return true;
 }
+
 /**常時呼び出される*/
 void MainGameScene::update(float delta){
-    PlayerData::sharePlayerData()->downStoneCount = stoneArray.size();
     PlayerData::sharePlayerData()->setNowTime();
     int elapsedTime = PlayerData::sharePlayerData()->getNowTime() - PlayerData::sharePlayerData()->getSaveTime();   //以前の時間と現在時間により経過時間
     //log("時間:%d",elapsedTime);
@@ -113,7 +134,12 @@ void MainGameScene::update(float delta){
             PlayerData::sharePlayerData()->getStoneCount++;
         }
     }
+    //取得している石の取得の保存
+    userDefault->setIntegerForKey("getStoneCount",PlayerData::sharePlayerData()->getStoneCount);
+    userDefault->flush();
+    
 }
+
 /**石を追加する*/
 void MainGameScene::addStone(/*float delta*/){
     if(MAX_STONE > stoneArray.size()){
@@ -123,7 +149,12 @@ void MainGameScene::addStone(/*float delta*/){
         stoneArray.push_back(stoneTest);
         this->addChild(stoneArray.at(stoneArray.size()-1),8);
     }
+    PlayerData::sharePlayerData()->downStoneCount = stoneArray.size();
+    //取得している石の取得の保存
+    userDefault->setIntegerForKey("downStoneCount",PlayerData::sharePlayerData()->getStoneCount);
+    userDefault->flush();
 }
+
 /**時間saveTimeの初期化*/
 void MainGameScene::timeInit(){
     if(PlayerData::sharePlayerData()->getSaveTime() == 0){
@@ -135,6 +166,7 @@ void MainGameScene::timeInit(){
         }
     }
 }
+
 /**経過時間により石を操作する*/
 void MainGameScene::stoneTimeManage(int elapsedTime){
     int difTime = elapsedTime / 5;
@@ -144,5 +176,8 @@ void MainGameScene::stoneTimeManage(int elapsedTime){
     }
     PlayerData::sharePlayerData()->setSaveTime();
     PlayerData::sharePlayerData()->setSaveTimeMod(modTime);
+    //時間の保存
+    userDefault->setIntegerForKey("saveTime",PlayerData::sharePlayerData()->getSaveTime());
+    userDefault->flush();
 }
 

@@ -2,6 +2,9 @@
 #include "talkScene.h"
 #include "MainGameScene.h"
 #include "PowerStoneScene.h"
+#include "StoryScene.h"
+#include "CollectionScene.h"
+#include "TitleScene.h"
 
 USING_NS_CC;
 
@@ -51,8 +54,9 @@ bool AppDelegate::applicationDidFinishLaunching() {
 
     // create a scene. it's an autorelease object
     //auto scene = talkScene::createScene();
-    auto scene = MainGameScene::createScene();
-
+    auto scene = TitleScene::createScene();
+    //auto scene = StoryScene::createScene();
+    
     // run
     director->runWithScene(scene);
 

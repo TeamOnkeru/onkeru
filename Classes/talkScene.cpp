@@ -37,14 +37,14 @@ bool talkScene::init()
     //画面サイズ
     Size visibleSize = Director::getInstance()->getVisibleSize();
     //背景
-    backStage = Sprite::create("talkChara/classroom.png");
+    backStage = Sprite::create("onkeru/onkeru_back.jpg");
     backStage->setPosition(backStage->getContentSize().width/2,backStage->getContentSize().height/2);
     //右側のキャラクター
-    rightChara = Sprite::create("talkChara/lennon_normal.png");
+    rightChara = Sprite::create();
     rightChara->setPosition(500,530);
     rightChara->setScale(0.8f);
     //左側のキャラクター
-    leftChara = Sprite::create("talkChara/fruichi.png");
+    leftChara = Sprite::create();
     leftChara->setPosition(150,530);
     leftChara->setScale(0.8f);
 
@@ -86,7 +86,7 @@ bool talkScene::init()
     }*/
     this->addChild(drawLabel);
     this->addChild(nameLabel);
-    readText("testLabel.txt");
+    readText(PlayerData::sharePlayerData()->talkURL);
     this->scheduleUpdate();
     this->getEventDispatcher()->addEventListenerWithSceneGraphPriority(listener, this);
     return true;
@@ -156,6 +156,15 @@ void talkScene::readTextToDrawObject(std::string flag){
         }else{
             if(flag == "SetStage"){
                 //log("%s",readTextData[drawLabelCount][1].c_str());
+                if(content == "IN"){
+                    backStage->setTexture("onkeru/divination.png");
+                    backStage->setPosition(backStage->getContentSize().width/2,backStage->getContentSize().height/2);
+                }
+                if(content == "OUT"){
+                    backStage->setTexture("onkeru/onkeru_back.jpg");
+                    backStage->setPosition(backStage->getContentSize().width/2,backStage->getContentSize().height/2);
+                }
+                /*
                 if(content == "passage"){
                     log("koko");
                     backStage->setTexture("talkChara/classroom.png");
@@ -164,8 +173,15 @@ void talkScene::readTextToDrawObject(std::string flag){
                 if(content == "pcroom"){
                     backStage->setTexture("talkChara/audiovisualroom.png");
                     backStage->setPosition(backStage->getContentSize().width/2,backStage->getContentSize().height/2);
-                }
+                }*/
             }else if(flag == "SLC"){
+                if(content == "OBA"){
+                    leftChara->setTexture("onkeru/oba.png");
+                }
+                if(content == "PLAYER"){
+                    leftChara->setTexture(PlayerData::sharePlayerData()->playerChara);
+                }
+                /*
                 if(content=="LISA"){
                     leftChara->setTexture("talkChara/lisa_smile.png");
                 }
@@ -174,8 +190,15 @@ void talkScene::readTextToDrawObject(std::string flag){
                 }
                 if(content == "LENNON"){
                     leftChara->setTexture("talkChara/lennon_normal.png");
-                }
+                }*/
             }else if(flag == "SRC"){
+                if(content == "OBA"){
+                    rightChara->setTexture("onkeru/oba.png");
+                }
+                if(content == "PLAYER"){
+                    rightChara->setTexture(PlayerData::sharePlayerData()->playerChara);
+                }
+                /*
                 if(content=="LISA"){
                     rightChara->setTexture("talkChara/lisa_smile.png");
                 }
@@ -184,7 +207,7 @@ void talkScene::readTextToDrawObject(std::string flag){
                 }
                 if(content == "LENNON"){
                     rightChara->setTexture("talkChara/lennon_normal.png");
-                }
+                }*/
             }else if(flag == "N"){
                 nameLabel->setString(content);
             }else if(flag ==""){
@@ -199,6 +222,9 @@ void talkScene::readTextToDrawObject(std::string flag){
                     rightChara->setColor(Color3B(100,100,100));
                     leftChara->setColor(Color3B(255,255,255));
                 }
+            }
+            else if(flag == "END"){
+                Director::getInstance()->replaceScene(TransitionFade::create(1.0f,MainGameScene::createScene()));
             }
             drawLabelCount++;
         }

@@ -12,6 +12,8 @@
 #include "cocos2d.h"
 #include "PowerStoneScene.h"
 #include "MainGameScene.h"
+#include "StoryScene.h"
+#include "CollectionScene.h"
 
 /**下メニュークラス*/
 class DownMenu:public cocos2d::Node
